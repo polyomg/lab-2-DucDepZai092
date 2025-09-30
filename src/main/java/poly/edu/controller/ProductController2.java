@@ -1,7 +1,8 @@
 package poly.edu.controller;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,8 @@ import poly.edu.Entity.Product;
 
 @Controller
 public class ProductController2 {
+private List<Product> items = new ArrayList<>();
+	
 	@GetMapping("poly/product2/form3")
 	public String form2(Model model) {
 		Product p1 = new Product();
@@ -21,17 +24,20 @@ public class ProductController2 {
 		/*?1*/ model.addAttribute("p1", p1);
 		return "poly/product/form3";
 	}
-	
+		
 	@PostMapping("poly/product2/save")
-	public String save2(@ModelAttribute("product") Product p2, Model model) {
-	    if (p2 == null) {
-	        p2 = new Product();
-	        p2.setName("No name");
-	        p2.setPrice(0.0);
-	    }
-	    model.addAttribute("p2", p2);
-		return "poly/product/form3";
+	public String save(@ModelAttribute("p2") Product p, Model model) {
+	    items.add(p); 
+	    model.addAttribute("p2", p);
+	    model.addAttribute("items", items);
+
+	    
+	    Product p1 = new Product("iPhone 30", 5000.0);
+	    model.addAttribute("p1", p1);
+
+	    return "poly/product/form3";
 	}
+
 	
 	/*?3*/@ModelAttribute("items")
 	public List<Product> getItems() {
